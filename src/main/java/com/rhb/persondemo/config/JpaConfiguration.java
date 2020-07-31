@@ -18,20 +18,20 @@ import org.springframework.transaction.PlatformTransactionManager;
 
 @Configuration
 public class JpaConfiguration {
-	
+
 	@Bean
 	public DataSource getDataSource() {
 		DriverManagerDataSource dataSource = new DriverManagerDataSource();
-		
+		System.out.println("Creating datasource....");
 		dataSource.setDriverClassName("oracle.jdbc.OracleDriver");
 		dataSource.setUrl("jdbc:oracle:thin:@localhost:1521:xe");
 		dataSource.setUsername("supadmin");
 		dataSource.setPassword("supadmin");
-		
+
 		return dataSource;
-		
+
 	}
-	
+
 	@Bean
 	public Map<String, Object> jpaProperties() {
 		Map<String, Object> props = new HashMap<String, Object>();
@@ -50,7 +50,7 @@ public class JpaConfiguration {
 
 	@Bean
 	public PlatformTransactionManager transactionManager() {
-		return new JpaTransactionManager( entityManagerFactory().getObject() );
+		return new JpaTransactionManager(entityManagerFactory().getObject());
 	}
 
 	@Bean

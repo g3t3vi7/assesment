@@ -19,6 +19,7 @@ public class PersonRepository {
 	@PersistenceContext
 	private EntityManager entityManager;
 
+	// @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
 	public List<Person> findByFirstname(String firstname) {
         
 		CriteriaBuilder cbObj = entityManager.getCriteriaBuilder();
@@ -29,7 +30,6 @@ public class PersonRepository {
         TypedQuery<Object> typedQuery = entityManager.createQuery(selectQuery.where(cbObj.like(from.get("firstname"), "%" + firstname + "%")));
         List<Person> personList = (List<Person>)(List<?>) typedQuery.getResultList();
  
-        
         return personList;
     }
 
