@@ -1,4 +1,4 @@
-package com.rhb.persondemo.models;
+package com.test.persondemo.models;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -9,14 +9,14 @@ import javax.persistence.SequenceGenerator;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity(name = "person")
-@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+@JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
 public class Person {
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator = "id_seq")
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "id_seq")
 	@SequenceGenerator(name = "id_seq", sequenceName = "person_seq", allocationSize = 1)
 	private Integer personid;
-	
+
 	private String firstname;
 	private String lastname;
 	private int age;

@@ -6,7 +6,9 @@
 
 	<persistence-unit name="application" transaction-type="RESOURCE_LOCAL">
 
-        <class>com.rhb.persondemo.models.Person</class>
+        <class>com.test.persondemo.models.Person</class>
+        <class>com.test.persondemo.models.User</class>
+        <class>com.test.persondemo.models.UserAuthority</class>
 		<exclude-unlisted-classes>true</exclude-unlisted-classes>
 
 	</persistence-unit>

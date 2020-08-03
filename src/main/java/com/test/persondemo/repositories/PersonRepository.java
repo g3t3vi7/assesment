@@ -1,4 +1,4 @@
-package com.rhb.persondemo.repositories;
+package com.test.persondemo.repositories;
 
 import java.util.List;
 
@@ -11,7 +11,7 @@ import javax.persistence.criteria.Root;
 
 import org.springframework.stereotype.Repository;
 
-import com.rhb.persondemo.models.Person;
+import com.test.persondemo.models.Person;
 
 @Repository
 public class PersonRepository {

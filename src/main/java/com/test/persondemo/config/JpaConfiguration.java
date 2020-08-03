@@ -1,4 +1,4 @@
-package com.rhb.persondemo.config;
+package com.test.persondemo.config;
 
 import java.util.HashMap;
 import java.util.Map;

@@ -1,4 +1,4 @@
-package com.rhb.persondemo.controllers;
+package com.test.persondemo.controllers;
 
 import java.util.List;
 import java.util.function.BiFunction;
@@ -17,56 +17,56 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.rhb.persondemo.models.Person;
-import com.rhb.persondemo.repositories.MainRepository;
-import com.rhb.persondemo.repositories.PersonRepository;
+import com.test.persondemo.models.Person;
+import com.test.persondemo.repositories.MainRepository;
+import com.test.persondemo.repositories.PersonRepository;
 
 @RestController
 @RequestMapping("/persons")
 public class PersonController {
-	
+
 	@Autowired
 	private MainRepository mainRepository;
-	
+
 	@Autowired
 	private PersonRepository personRepository;
-	
+
 	private Consumer<Person> deletePersonByFirstname = p -> mainRepository.deleteById(p.getPersonid());
-	private BiFunction<Person, Person, Person> updateExistingRecordPerson = 
-		(person, ep) -> {
-			BeanUtils.copyProperties(person, ep, "personid");
-			mainRepository.saveAndFlush(ep);
-			return ep;
-		};
-	
+	private BiFunction<Person, Person, Person> updateExistingRecordPerson = (person, ep) -> {
+		BeanUtils.copyProperties(person, ep, "personid");
+		mainRepository.saveAndFlush(ep);
+		return ep;
+	};
+
 	@GetMapping
 	public List<Person> list() {
 		return mainRepository.findAll();
 	}
-	
+
 	@GetMapping
-	@RequestMapping("getPersonByFirstName/{firstname}")
+	@RequestMapping("{firstname}")
 	public List<Person> get(@PathVariable String firstname) {
 		return personRepository.findByFirstname(firstname);
 	}
-	
+
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
 	public Person create(@RequestBody final Person person) {
 		return mainRepository.saveAndFlush(person);
 	}
-	
-	@RequestMapping(value="{firstname}", method=RequestMethod.DELETE)
+
+	@RequestMapping(value = "{firstname}", method = RequestMethod.DELETE)
 	public void delete(@PathVariable String firstname) {
 		List<Person> persons = personRepository.findByFirstname(firstname);
 		persons.stream().forEach(deletePersonByFirstname);
 	}
-	
-	@RequestMapping(value="{firstname}", method=RequestMethod.PUT)
+
+	@RequestMapping(value = "{firstname}", method = RequestMethod.PUT)
 	public List<Person> update(@PathVariable String firstname, @RequestBody Person person) {
 		List<Person> existingPersons = personRepository.findByFirstname(firstname);
-		List<Person> persons = existingPersons.stream().map(u -> updateExistingRecordPerson.apply(person, u)).collect(Collectors.toList());
-	
+		List<Person> persons = existingPersons.stream().map(u -> updateExistingRecordPerson.apply(person, u))
+				.collect(Collectors.toList());
+
 		return persons;
 	}
 }
